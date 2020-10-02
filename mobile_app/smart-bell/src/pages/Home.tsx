@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel, IonLoading } from '@ionic/react';
 import React, { constructor, useState } from 'react';
 import './Home.css';
 
@@ -7,6 +7,7 @@ const Home: React.FC = () => {
   const [startAlarm, setStartAlarm] = useState<boolean>(false);
   const [alarmText, setAlarmText] = useState<string>("Start alarm");
   const [alarmColor, setAlarmColor] = useState<string>("danger");
+  const [showLoading, setShowLoading] = useState<boolean>(false);
 
   return (
     <IonPage>
@@ -26,7 +27,14 @@ const Home: React.FC = () => {
             <IonImg src="https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png"></IonImg>
           </IonCardHeader>
           <IonCardContent>
-            <IonButton expand="block">Send photo again</IonButton>
+            <IonButton expand="block" onClick={() => setShowLoading(true)}>Send photo again</IonButton>
+            <IonLoading
+              cssClass='my-custom-class'
+              isOpen={showLoading}
+              onDidDismiss={() => setShowLoading(false)}
+              message={'Please wait...'}
+              duration={5000}
+            />
             <IonButton expand="block" color={alarmColor} onClick={() => {
               setStartAlarm(!startAlarm);
               if(startAlarm){
@@ -41,7 +49,7 @@ const Home: React.FC = () => {
               {alarmText}
             </IonButton>
             <IonButton expand="block" color="warning">
-              Open door
+              Unlock door
             </IonButton>
           </IonCardContent>
         </IonCard>
