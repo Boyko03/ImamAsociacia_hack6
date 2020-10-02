@@ -24,7 +24,7 @@ const Home: React.FC = () => {
         </IonHeader>
         <IonCard>
           <IonCardHeader>
-            <IonImg src="https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png"></IonImg>
+            <IonImg src="http://5.53.145.215:5940/frame.png"></IonImg>
           </IonCardHeader>
           <IonCardContent>
             <IonButton expand="block" onClick={() => setShowLoading(true)}>Send photo again</IonButton>
