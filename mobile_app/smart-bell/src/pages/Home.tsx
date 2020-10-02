@@ -20,6 +20,15 @@ const Home: React.FC = () => {
           <IonCardHeader>
             <IonImg src="http://aif.guide.bg/images/bg.jpg"></IonImg>
           </IonCardHeader>
+          <IonCardContent>
+            <IonButton expand="block">Send photo again</IonButton>
+            <IonButton expand="block" color="danger">
+              Start alarm
+            </IonButton>
+            <IonButton expand="block" color="warning">
+              Open door
+            </IonButton>
+          </IonCardContent>
         </IonCard>
       </IonContent>
     </IonPage>
