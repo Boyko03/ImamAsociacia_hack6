@@ -1,8 +1,12 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { constructor, useState } from 'react';
 import './Home.css';
 
+
 const Home: React.FC = () => {
+  const [startAlarm, setStartAlarm] = useState<boolean>(true);
+  const [alarmText, setAlarmText] = useState<string>("Start alarm");
+
   return (
     <IonPage>
       <IonHeader>
@@ -22,8 +26,16 @@ const Home: React.FC = () => {
           </IonCardHeader>
           <IonCardContent>
             <IonButton expand="block">Send photo again</IonButton>
-            <IonButton expand="block" color="danger">
-              Start alarm
+            <IonButton expand="block" color="danger" onClick={() => {
+              setStartAlarm(!startAlarm);
+              if(startAlarm){
+                setAlarmText("Start Alarm");
+              }
+              else{
+                setAlarmText("Stop Alarm");
+              }
+              }}>
+              {alarmText}
             </IonButton>
             <IonButton expand="block" color="warning">
               Open door
