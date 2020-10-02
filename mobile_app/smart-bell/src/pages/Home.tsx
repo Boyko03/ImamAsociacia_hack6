@@ -1,5 +1,5 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel } from '@ionic/react';
+import React, { useState } from 'react';
 import './Home.css';
 
 const Home: React.FC = () => {
@@ -7,15 +7,20 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Smart Bell</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle size="large">Smart Bell</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonCard>
+          <IonCardHeader>
+            <IonImg src="http://aif.guide.bg/images/bg.jpg"></IonImg>
+          </IonCardHeader>
+        </IonCard>
       </IonContent>
     </IonPage>
   );
