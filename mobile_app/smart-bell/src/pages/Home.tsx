@@ -4,7 +4,7 @@ import './Home.css';
 
 
 const Home: React.FC = () => {
-  const [startAlarm, setStartAlarm] = useState<boolean>(true);
+  const [startAlarm, setStartAlarm] = useState<boolean>(false);
   const [alarmText, setAlarmText] = useState<string>("Start alarm");
 
   return (
