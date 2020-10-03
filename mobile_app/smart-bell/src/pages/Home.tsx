@@ -6,10 +6,10 @@ import { FCM } from '../components/FCM'
 
 const Home: React.FC = () => {
   const fcm = new FCM('io.ionic.starter');
-  const TEST_PM_URL = 'http://192.168.0.89:50728'
-  const POST_URL = 'http://192.168.1.184:80'
+  // const TEST_PM_URL = 'http://192.168.0.89:50728'
+  const POST_URL = 'https://cors-anywhere.herokuapp.com/http://192.168.0.58:80'
   const IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
-  const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
+  // const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
 
 
   const [startAlarm, setStartAlarm] = useState<boolean>(false);
