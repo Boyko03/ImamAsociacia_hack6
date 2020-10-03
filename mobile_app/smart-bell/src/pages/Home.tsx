@@ -1,10 +1,17 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel, IonLoading } from '@ionic/react';
-import React, { constructor, useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonImg, IonCard, IonCardContent, IonCardHeader, IonIcon, IonList, IonItem, IonToggle, IonLabel, IonLoading, IonRefresher, IonRefresherContent } from '@ionic/react';
+import React, { useState } from 'react';
 import './Home.css';
+import { FCM } from '../components/FCM'
 
 
 const Home: React.FC = () => {
-  const postUrl = 'http://example.url'
+  const fcm = new FCM('io.ionic.starter');
+  const TEST_PM_URL = 'http://192.168.0.89:50728'
+  const POST_URL = 'http://192.168.1.184:80'
+  const IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
+  const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
+
+
   const [startAlarm, setStartAlarm] = useState<boolean>(false);
   const [alarmText, setAlarmText] = useState<string>("Start alarm");
   const [alarmColor, setAlarmColor] = useState<string>("danger");
@@ -15,8 +22,8 @@ const Home: React.FC = () => {
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
     });
-    xhr.open('POST', postUrl);
-    xhr.send(JSON.stringify({ alarm: "on" }))
+    xhr.open('GET', POST_URL + '?command=alarmOn');
+    xhr.send();
   }
 
   function postAlarmOff(){
@@ -24,8 +31,8 @@ const Home: React.FC = () => {
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
     });
-    xhr.open('POST', postUrl);
-    xhr.send(JSON.stringify({ alarm: "off" }))
+    xhr.open('GET', POST_URL + '?command=alarmOff');
+    xhr.send();
   }
 
   function postDoorUnlock(){
@@ -33,8 +40,8 @@ const Home: React.FC = () => {
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
     });
-    xhr.open('POST', postUrl);
-    xhr.send(JSON.stringify({ door: "unlock" }))
+    xhr.open('GET', POST_URL + '?command=doorUnlock');
+    xhr.send();
   }
 
   return (
@@ -52,10 +59,13 @@ const Home: React.FC = () => {
         </IonHeader>
         <IonCard>
           <IonCardHeader>
-            <IonImg src="http://5.53.145.215:5940/frame.png"></IonImg>
+            <IonImg src={IMG_URL}></IonImg>
           </IonCardHeader>
           <IonCardContent>
-            <IonButton expand="block" onClick={() => setShowLoading(true)}>Send photo again</IonButton>
+            <IonButton expand="block" onClick={() => {
+              setShowLoading(true);
+              //window.location.reload();
+            }}>Send photo again</IonButton>
             <IonLoading
               cssClass='my-custom-class'
               isOpen={showLoading}
@@ -83,6 +93,7 @@ const Home: React.FC = () => {
             </IonButton>
           </IonCardContent>
         </IonCard>
+        <IonButton onClick={() => fcm.push()}>FCM Push</IonButton>
       </IonContent>
     </IonPage>
   );
