@@ -12,7 +12,7 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-img src="{{IMG_URL}}"></ion-img>
+      <ion-img src="{{IMG_URL}}" (error)="onImgError()"></ion-img>
     </ion-card-header>
     <ion-card-content>
       <ion-button expand="block" (click)="newPhotoBtn()" color = {{newPhotoColor}}>Send new photo</ion-button>

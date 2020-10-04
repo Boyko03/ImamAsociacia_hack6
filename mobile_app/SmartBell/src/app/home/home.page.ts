@@ -64,6 +64,10 @@ export class HomePage {
     }
   }
 
+  onImgError(){
+    console.log("Img error")
+  }
+
   postAlarmOn(){
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
