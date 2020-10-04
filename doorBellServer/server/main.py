@@ -23,7 +23,7 @@ HOST = '127.0.0.1'
 PORT = 9999
 
 mobile_client_request = False 
-send_message_flag = False 
+send_message_flag = False
 
 
 async def method(request):
@@ -57,7 +57,7 @@ def get_image(conn):
     if not send_message_flag :
         if len(detect_faces()):
             message = messaging.Message(
-                    notification=messaging.Notification('Face detected at' + datetime.date.today().strftime("%H:%M:%S, %m/%d/%Y")),
+                    notification=messaging.Notification('Face detected at' + datetime.datetime.now().strftime("%H:%M:%S, %m/%d/%Y")),
                     token=firebase_token,
                 )
         
@@ -66,7 +66,7 @@ def get_image(conn):
 
         else:
             message = messaging.Message(
-                    notification=messaging.Notification('Monster detected at' + datetime.date.today().strftime("%H:%M:%S, %m/%d/%Y")),
+                    notification=messaging.Notification('Monster detected at' + datetime.datetime.now().strftime("%H:%M:%S, %m/%d/%Y")),
                     token=firebase_token,
                 )
 
