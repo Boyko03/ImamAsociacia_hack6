@@ -1,0 +1,7 @@
+{
+  "name": "SmartBell",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
