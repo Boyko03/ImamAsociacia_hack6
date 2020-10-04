@@ -14,7 +14,7 @@ export class HomePage {
 
   
   // const TEST_PM_URL = 'http://192.168.0.89:50728'
-  POST_URL = 'https://cors-anywhere.herokuapp.com/http://192.168.0.58:80'
+  POST_URL = 'http://192.168.43.118:80/input'
   IMG_URL = 'https://angular.io/assets/images/logos/angular/logo-nav@2x.png'
   NEW_PHOTO_URL = 'http://192.168.0.3:11111/input'
   // const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
@@ -84,7 +84,7 @@ export class HomePage {
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
     });
-    xhr.open('GET', this.POST_URL + '?command=doorUnlock');
+    xhr.open('GET', this.POST_URL + '?command=unlock');
     xhr.send();
   }
 
