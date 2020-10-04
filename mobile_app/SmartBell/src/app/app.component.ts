@@ -66,9 +66,6 @@ export class AppComponent implements OnInit {
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
-        var audio1 = new Audio('https://raw.githubusercontent.com/ClickerVinod/Ionic4CapFCM/master/src/assets/audio.mp3');
-        console.log('Audio');
-        audio1.play();
         // alert('Push received: ' + JSON.stringify(notification));
         console.log('Push received: ', notification);
 
@@ -76,7 +73,9 @@ export class AppComponent implements OnInit {
           title: notification.title,
           message: notification.body
         });
-
+        setTimeout(function() {
+          window.location.href = "/home"
+        }, 500);
       }
     );
 
@@ -85,6 +84,10 @@ export class AppComponent implements OnInit {
       (notification: PushNotificationActionPerformed) => {
         alert('Push action performed: ' + JSON.stringify(notification));
         console.log('Push action performed: ' + notification);
+
+        setTimeout(function() {
+          window.location.href = "/home"
+        }, 500);
       }
     );
   }

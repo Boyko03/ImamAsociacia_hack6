@@ -46,7 +46,7 @@ export class HomePage {
     xhr.send();
     setTimeout(function() {
       location.reload();
-    }, 3000);
+    }, 5000);
   }
   
   alarmButtonClick(){
@@ -83,6 +83,9 @@ export class HomePage {
   }
 
   postDoorUnlock(){
+    this.postAlarmOff();
+    this.alarmColor = "danger";
+    this.alarmText = "Start Alarm";
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
