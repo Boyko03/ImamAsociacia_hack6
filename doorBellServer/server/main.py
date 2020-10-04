@@ -6,16 +6,23 @@ import numpy as np
 import struct
 import time
 import os
+import threading
+from aiohttp import web
 
-os.system("cd results")
-os.system("python3 -m http.server 5940 &")
-os.system("cd ..")
+
 
 HOST = '127.0.0.1'
 PORT = 9999
 
-mobile_client_request = True 
+mobile_client_request = False 
 
+
+async def method(request):
+    arg = request.rel_url.query['not']
+    if arg == "SBI":
+        global mobile_client_request
+        mobile_client_request = True
+    return web.Response(text="OK!", content_type="text/plain")
 
 # because img is too big to be transmitted over one tcp packet we 
 def get_image(conn):
@@ -75,4 +82,22 @@ def open_socket_with_ImClient():
                     print("i don't know what happen")
 
 
-open_socket_with_ImClient()
+if __name__ == '__main__':
+    os.system("cd results")
+    os.system("python3 -m http.server 5940 &")
+    os.system("cd ..")
+
+
+    app = web.Application()
+    app.router.add_route('GET', "/input", method)
+    
+    y = threading.Thread(target=open_socket_with_ImClient, args=())
+    
+    y.start()
+    
+    web.run_app(app,host='localhost', port=11111)
+
+    #x = threading.Thread(target=app.run_app, args=(app, host='localhost', port=11111))
+    #open_socket_with_ImClient()
+
+    #x.start()
