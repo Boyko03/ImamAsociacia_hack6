@@ -14,6 +14,8 @@ os.system("cd ..")
 HOST = '127.0.0.1'
 PORT = 9999
 
+mobile_client_request = True 
+
 
 # because img is too big to be transmitted over one tcp packet we 
 def get_image(conn):
@@ -33,24 +35,44 @@ def get_image(conn):
     frame=pickle.loads(frame_data)
     print(frame)
     cv2.imwrite('./results/frame.png',frame)
+    print('done')
+    #data = b''
+    #frame = ''
 
 
 def open_socket_with_ImClient():
+    global mobile_client_request
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.bind((HOST, PORT))
         sock.listen(5)
+        #sock.settimeout(2)
         print("Waiting for connection...")
         conn, addr = sock.accept()
         with conn:
             print('Connected by ', addr)
             while True:
+                print('hi')
                 message = conn.recv(1024)
-                # print(message)
-                if(message == b"NI"):
+                message = message[:2]
+                print(message)
+                
+                print(mobile_client_request)
+                if message == b"NI" or message[:2] == b'NI':
+                    #print('NI')
                     conn.send(b"SNI")
                     #conn.close()
                     get_image(conn)
 
+                elif message == b"RD" or message[:2] == b'RD':
+                    if mobile_client_request:
+                        conn.send(b"T")
+                        mobile_client_request = False 
+                        print(mobile_client_request)
+                    else:
+                        print(mobile_client_request)
+                        conn.send(b"F")
+                else:
+                    print("i don't know what happen")
 
 
 open_socket_with_ImClient()
