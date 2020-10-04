@@ -1,7 +1,0 @@
-{
-  "name": "Smart Bell",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
