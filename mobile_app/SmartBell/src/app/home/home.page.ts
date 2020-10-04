@@ -46,7 +46,7 @@ export class HomePage {
     xhr.send();
     setTimeout(function() {
       location.reload();
-    }, 2000);
+    }, 3000);
   }
   
   alarmButtonClick(){

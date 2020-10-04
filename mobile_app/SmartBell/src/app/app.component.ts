@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-   ngOnInit() {
+  ngOnInit() {
     console.log('Initializing HomePage');
 
     // Register with Apple / Google to receive push via APNS/FCM
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
-        var audio1 = new Audio('assets/audio.mp3');
+        var audio1 = new Audio('https://raw.githubusercontent.com/ClickerVinod/Ionic4CapFCM/master/src/assets/audio.mp3');
         console.log('Audio');
         audio1.play();
         // alert('Push received: ' + JSON.stringify(notification));
@@ -87,5 +87,5 @@ export class AppComponent implements OnInit {
         console.log('Push action performed: ' + notification);
       }
     );
-   }
- }
+  }
+}
