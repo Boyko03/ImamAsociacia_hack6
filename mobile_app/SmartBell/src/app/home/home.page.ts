@@ -15,9 +15,11 @@ export class HomePage {
   
   TEST_PM_URL = 'http://192.168.0.89:55165'
   POST_URL = 'http://192.168.43.118:80/input'
-  IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
-  NEW_PHOTO_URL = 'http://192.168.0.3:11111/input?not=SIB'
-  // const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
+  IMG_URL_LOCAL = 'http://192.168.0.3:5940/results/frame.png'
+  NEW_PHOTO_URL_LOCAL = 'http://192.168.0.3:11111/input?not=SIB'
+
+  IMG_URL = 'http://5.53.145.215:5940/results/frame.png'
+  NEW_PHOTO_URL = 'http://5.53.145.215:11111/input?not=SIB'
   
   startAlarm = true;
   alarmText = "Start Alarm"
@@ -65,7 +67,10 @@ export class HomePage {
   }
 
   onImgError(){
-    console.log("Img error")
+    console.log("Img error. not loading");
+    setTimeout(function() {
+      location.reload();
+    }, 5000);
   }
 
   postAlarmOn(){
