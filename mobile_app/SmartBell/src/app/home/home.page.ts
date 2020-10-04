@@ -13,10 +13,10 @@ export class HomePage {
   public loadingController: LoadingController
 
   
-  // const TEST_PM_URL = 'http://192.168.0.89:50728'
+  TEST_PM_URL = 'http://192.168.0.89:55165'
   POST_URL = 'http://192.168.43.118:80/input'
-  IMG_URL = 'https://angular.io/assets/images/logos/angular/logo-nav@2x.png'
-  NEW_PHOTO_URL = 'http://192.168.0.3:11111/input'
+  IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
+  NEW_PHOTO_URL = 'http://192.168.0.3:11111/input?not=SIB'
   // const LOCAL_IMG_URL = 'http://192.168.0.3:5940/results/frame.png'
   
   startAlarm = true;
@@ -42,8 +42,11 @@ export class HomePage {
     xhr.addEventListener('load', () => {
       console.log(xhr.responseText);
     });
-    xhr.open('GET', this.NEW_PHOTO_URL + '?not="SIB"');
+    xhr.open('GET', this.NEW_PHOTO_URL);
     xhr.send();
+    setTimeout(function() {
+      location.reload();
+    }, 2000);
   }
   
   alarmButtonClick(){
