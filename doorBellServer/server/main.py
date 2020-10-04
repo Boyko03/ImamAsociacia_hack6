@@ -10,11 +10,14 @@ import threading
 import cv2
 import numpy as np
 from aiohttp import web
+
+import firebase_admin
 from firebase_admin import messaging
+from firebase_admin import credentials
 
 from face_recognition import detect_faces 
 
-firebase_token = 'emXGbjRIQGm5GJTktFtMb-:APA91bFFFhTNJXjpsPlKLRBnJtra8t1kN7eVtavwyHuyIMZ3P2vcS-63gvx-pqRvUa1p9zKjfXk0X9SQ6NeK19OFcAQml6WgW82fRfMRKy_pTI7mXf6a0LFno1jn6ul6-WVy-QH92gW2'
+firebase_token = 'dqP00teTR-qELfhgGISzN4:APA91bF6AMOsSClZyjC2A1a-1upb9tKxQVY2r__6GyQRIjDuLttbjInbJ7no4YyBcdPzTZKSk_IeUik5Cidl72hzdm7MpGSX1wSHI2xHMq7lFKuKhkjRhAZ4gWxHbiGpoSNA3Ld6jpTD'
 
 HOST = '127.0.0.1'
 PORT = 9999
@@ -50,16 +53,11 @@ def get_image(conn):
     data = data[msg_size:] 
 
     frame=pickle.loads(frame_data)
-    print(frame)
     cv2.imwrite('./results/frame.png',frame)
-    #print(send_message_flag)
     if not send_message_flag :
         if len(detect_faces()):
             message = messaging.Message(
-                    data={
-                        'notification': 'face_detected',
-                        'time': datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S"),
-                    },
+                    notification=messaging.Notification('Face detected at' + datetime.date.today().strftime("%H:%M:%S, %m/%d/%Y")),
                     token=firebase_token,
                 )
         
@@ -68,10 +66,7 @@ def get_image(conn):
 
         else:
             message = messaging.Message(
-                    data={
-                        'notification': 'bell_clicked',
-                        'time': datetime.date.today().strftime("%m/%d/%Y, %H:%M:%S"),
-                    },
+                    notification=messaging.Notification('Monster detected at' + datetime.date.today().strftime("%H:%M:%S, %m/%d/%Y")),
                     token=firebase_token,
                 )
 
@@ -96,14 +91,17 @@ def open_socket_with_ImClient():
                 message = message[:2]
                 
                 if message == b"NI" or message[:2] == b'NI':
+                    #time.sleep(1)
                     conn.send(b"SNI")
                     get_image(conn)
 
                 elif message == b"RD" or message[:2] == b'RD':
                     if mobile_client_request:
+                        #time.sleep(1)
                         conn.send(b"T")
                         mobile_client_request = False 
                     else:
+                        #time.sleep(1)
                         conn.send(b"F")
                 else:
                     print("i don't know what happen")
@@ -113,6 +111,9 @@ if __name__ == '__main__':
     os.system("cd results")
     os.system("python3 -m http.server 5940 &")
     os.system("cd ..")
+
+    cred = credentials.Certificate("smart-bell-4c6f7-firebase-adminsdk-nusib-19458da3ec.json")
+    firebase_admin.initialize_app(cred)
 
     sock_thread = threading.Thread(target=open_socket_with_ImClient, args=())
     sock_thread.start()

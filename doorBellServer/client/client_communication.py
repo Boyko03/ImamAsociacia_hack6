@@ -7,7 +7,6 @@ import sys
 import pickle
 import struct
 import numpy as np
-from face_recognition import generateImage,convertToRGB,detect_faces
 import requests
 import RPi.GPIO as GPIO 
 
@@ -21,14 +20,14 @@ GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 request_type = "question"
 
 def generateContent(request_type):
-    if(request_type == "image"):
+    if request_type == "image":
         os.system("./runcam.sh")
         result = cv2.imread("./results/image.png")
 
-    elif(request_type == "question"):
+    elif request_type == "question":
         result = b"NI"
 
-    elif(request_type == "data"):
+    elif request_type == "data":
         result = b"RD"
 
     return result
@@ -37,34 +36,31 @@ def generateContent(request_type):
 
 
 def sendContent(request_type):
-    if(request_type == "question"):
+    if request_type == "question":
         content = generateContent(request_type)
+        #time.sleep(1)
         client_socket.send(content)
 
-    elif(request_type == "image"):
+    elif request_type == "image":
         input_info = client_socket.recv(1024)
-        if(input_info == b"SNI"):
+        if input_info == b"SNI":
             frame = generateContent(request_type)
             data = pickle.dumps(frame)
             client_socket.sendall(struct.pack("L", len(data)) + data)
-            #client_socket.send(b'RD')
-            #client_socket.send(b'RD')
             time.sleep(1)
             client_socket.send(b'RD')
-            print(input_info)
 
-    elif(request_type == "data"):
+    elif request_type == "data":
         content = generateContent(request_type)
+        #time.sleep(1)
         client_socket.send(content)
         data = client_socket.recv(1024)
-        if(data == b"T"):
-            #client_socket.send(b'RD')
+        if data == b"T":
             sendContent("question")
             sendContent("image")
-            #client_socket.send(content)
-        elif(data == b"F"):
-            #client_socket.send(content)
+        elif data == b"F":
             print(data)
+
 while True:
     if GPIO.input(3) == GPIO.LOW:
         print(GPIO.input(3))
